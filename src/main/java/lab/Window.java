@@ -21,7 +21,7 @@ public class Window extends JFrame {
         setSize(1000, 400);
 
         JPanel grid = new JPanel();
-        GridLayout layout = new GridLayout(0, 3, 12, 12);
+        GridLayout layout = new GridLayout(0, 4, 12, 12);
         grid.setLayout(layout);
 
         register = new JButton("Зарегистрировать текст");
@@ -37,19 +37,18 @@ public class Window extends JFrame {
         resField = new JTextField();
 
         grid.add(strLabel);
-        grid.add(strField);
-        grid.add(register);
-
         grid.add(keyLabelFirst);
-        grid.add(keyFieldFirst);
-        grid.add(code);
-
         grid.add(keyLabelSecond);
-        grid.add(keyFieldSecond);
-        grid.add(decode);
-
         grid.add(resLabel);
+
+        grid.add(strField);
+        grid.add(keyFieldFirst);
+        grid.add(keyFieldSecond);
         grid.add(resField);
+
+        grid.add(register);
+        grid.add(code);
+        grid.add(decode);
 
         getContentPane().add(grid);
 
