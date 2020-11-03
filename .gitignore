@@ -1,0 +1,9 @@
+# Default ignored files
+/shelf/
+.idea
+# Datasource local storage ignored files
+/../../../../../../../../:\Projects\Univer\Java\bezopasnost\first\first\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+*.iml
