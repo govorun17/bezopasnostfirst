@@ -6,11 +6,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Algorithm {
-    private int[] keyFirst = null;
-    private int[] keySecond = null;
-    String str;
-    int sizeRow;
-    int sizeCol;
+    private int[] columns = null;
+    private int[] rows = null;
+    String string;
+    int rowSize;
+    int colSize;
 
     public void setKeys(String keyF, String keyS) throws IOException {
         if (keyF == null || keyF.equals("")) {
@@ -18,19 +18,19 @@ public class Algorithm {
         }
         else {
             String[] keyFArray = keyF.split("-");
-            if (keyFArray.length != sizeCol) {
+            if (keyFArray.length != colSize) {
                 throw new IOException("Длина первого ключа не соответствует условию");
             }
-            this.keyFirst = new int[keyFArray.length];
+            this.columns = new int[keyFArray.length];
             try {
                 for (int i = 0; i < keyFArray.length; i++) {
-                    this.keyFirst[i] = Integer.parseInt(keyFArray[i]);
+                    this.columns[i] = Integer.parseInt(keyFArray[i]);
                 }
             }
             catch (Exception e) {
                 throw new IOException("Ключи должны содержать только цифры. Форма ключа 1-2-3-4-...");
             }
-            if (!isValid(keyFirst)) {
+            if (!isValid(columns)) {
                 throw new IOException("Нарушена форма первого ключа. Форма ключа 1-2-3-4-...");
             }
         }
@@ -40,19 +40,19 @@ public class Algorithm {
         }
         else {
             String[] keySArray = keyS.split("-");
-            if (keySArray.length != sizeRow) {
+            if (keySArray.length != rowSize) {
                 throw new IOException("Длина второго ключа не соответствует условию");
             }
-            this.keySecond = new int[keySArray.length];
+            this.rows = new int[keySArray.length];
             try {
                 for (int i = 0; i < keySArray.length; i++){
-                    this.keySecond[i] = Integer.parseInt(keySArray[i]);
+                    this.rows[i] = Integer.parseInt(keySArray[i]);
                 }
             }
             catch (Exception e) {
                 throw new IOException("Ключи должны содержать только цифры. Форма ключа 1-2-3-4-...");
             }
-            if (!isValid(keySecond)) {
+            if (!isValid(rows)) {
                 throw new IOException("Нарушена форма второго ключа. Форма ключа 1-2-3-4-...");
             }
         }
@@ -62,31 +62,31 @@ public class Algorithm {
         if (s == null || s.equals("")) {
             throw new IOException("Строка пустая, введите строку");
         }
-        str = s;
-        sizeRow = (int) Math.sqrt(str.length());
-        sizeCol = (int) Math.ceil((double) str.length()/sizeRow);
+        string = s;
+        rowSize = (int) Math.sqrt(string.length());
+        colSize = (int) Math.ceil((double) string.length()/ rowSize);
         Map<String, Integer> result = new HashMap<>();
-        result.put("first", sizeCol);
-        result.put("second", sizeRow);
+        result.put("first", colSize);
+        result.put("second", rowSize);
 
         return result;
     }
 
     public String code() {
-        char[][] codeArray = new char[sizeRow][sizeCol];
+        char[][] code = new char[rowSize][colSize];
         int j = 0;
-        int k = sizeCol;
+        int k = colSize;
 
-        for (int i : keySecond) {
-            codeArray[i - 1] = substr(str, j, k);
-            j += sizeCol;
-            k += sizeCol;
+        for (int i : rows) {
+            code[i - 1] = substr(string, j, k);
+            j += colSize;
+            k += colSize;
         }
 
         StringBuilder result = new StringBuilder();
-        for (int i : keyFirst) {
-            for (int l = 0; l < sizeRow; l++) {
-                result.append(codeArray[l][i - 1]);
+        for (int i : columns) {
+            for (int l = 0; l < rowSize; l++) {
+                result.append(code[l][i - 1]);
             }
         }
 
@@ -94,25 +94,25 @@ public class Algorithm {
     }
 
     public String decode() {
-        char[][] decodeArray = new char[sizeRow][sizeCol];
+        char[][] decode = new char[rowSize][colSize];
         int j = 0;
 
-        for (int i : keyFirst) {
-            for (int l = 0; l < sizeRow; l++) {
-                decodeArray[l][i-1] = str.charAt(j);
+        for (int i : columns) {
+            for (int l = 0; l < rowSize; l++) {
+                decode[l][i-1] = string.charAt(j);
                 j++;
             }
         }
 
-        StringBuilder res = new StringBuilder();
+        StringBuilder result = new StringBuilder();
 
-        for (int i : keySecond) {
-            for (int l = 0; l < sizeCol; l++) {
-                res.append(decodeArray[i-1][l]);
+        for (int i : rows) {
+            for (int l = 0; l < colSize; l++) {
+                result.append(decode[i-1][l]);
             }
         }
 
-        return res.toString();
+        return result.toString();
     }
 
     private Boolean isValid(int[] key) {
