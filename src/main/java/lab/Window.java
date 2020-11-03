@@ -90,6 +90,8 @@ public class Window extends JFrame {
 
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Зарегистрируйте сообщение и попробуйте снова");
             }
         }
     }
